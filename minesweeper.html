@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minesweeper</title>
+  </head>
+  <body>
+    <h1>ระบบกู้กับระเบิด</h1>
+    แถว (Row) : <input type="text" id="row" /> คอลัมน์ (col) :
+    <input type="text" id="col" />
+    <button onclick="c()">กู้ระเบิด</button>
+    <div id="mind"></div>
+    <div id="sum"></div>
+    <script>
+      let mine = [
+        [0, 9, 0, 0, 9, 0, 0],
+        [9, 0, 0, 9],
+        [0, 9, 0],
+        [9, 0, 0, 9, 9, 0],
+        [0, 9, 0, 9, 0],
+      ];
+      let showmine = document.getElementById("mind");
+      let showsum = document.getElementById("sum");
+      let sumt = 0;
+      let sum = 0;
+      let num1 = 0;
+      let num2 = 0;
+      for (let i = 0; i < mine.length; i++) {
+        for (let j = 0; j < mine[i].length; j++) {
+          if (mine[i][j] === 9) {
+            sum += 1;
+            sumt += 1;
+          }
+        }
+        showmine.innerHTML += `แถวที่ ${i} | ${mine[i]} |<br>`;
+      }
+      showsum.innerHTML += `
+      <hr>
+      จำนวนกับระเบิดเริ่มต้นทั้งหมด : ${sumt}<br>
+      กู้สำเร็จ(1) : ${num1}<br>
+      กู้ผิดตำแหน่ง(x) : ${num2}<br>
+      จำนวนระเบิดที่เหลือ : ${sum}`;
+
+      function c() {
+        let row = document.getElementById("row").value;
+        let col = document.getElementById("col").value;
+        if (mine[row][col] == 9) {
+          mine[row][col] = 1;
+          num1 += 1;
+          sum = sum - 1;
+        } else if (mine[row][col] == 0) {
+          mine[row][col] = "x";
+          num2 += 1
+        }
+        showmine.innerHTML = "";
+        for (let i = 0; i < mine.length; i++) {
+          showmine.innerHTML += `แถวที่ ${i} | ${mine[i]} |<br>`;
+        }
+        showsum.innerHTML = "";
+
+        showsum.innerHTML += `
+        <hr>
+        จำนวนกับระเบิดเริ่มต้นทั้งหมด : ${sumt}<br>
+        กู้สำเร็จ(1) : ${num1}<br>
+        กู้ผิดตำแหน่ง(x) : ${num2}<br>
+        จำนวนระเบิดที่เหลือ : ${sum}`;
+      }
+    </script>
+  </body>
+</html>
